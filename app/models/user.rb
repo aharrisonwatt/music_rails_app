@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
     return nil if user.nil?
-    return user if user.is_password?
+    return user if user.is_password?(password)
     nil
   end
 
@@ -29,8 +29,8 @@ class User < ActiveRecord::Base
 
   def reset_session_token
     self.session_token = generate_session_token
-    session[:session_token] = nil
     self.save!
+    self.session_token
   end
 
   private
