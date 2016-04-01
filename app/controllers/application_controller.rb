@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user!
+    unless logged_in?
+      redirect_to bands_url
+      flash[:error] = "you need to log in to do that"
+    end
   end
 
   def logged_in?
